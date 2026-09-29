@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Assignment
 {
@@ -55,17 +57,54 @@ namespace Assignment
 
         public int[] AS01_FindFirstAndLastElementOfArray(int[] array, int target)
         {
-            throw new NotImplementedException();
+            if (array == null || array.Length == 0 || !array.Contains(target))
+            {
+                return new[] { -1 };
+            }
+
+            int first = -1;
+            int last = -1;
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == target)
+                {
+                    if (first == -1)
+                    {
+                        first = i;
+                    }
+                    last = i;
+                }
+            }
+
+            return new[] { first, last };
         }
 
         public int AS02_FindMaxLessThan(int[] array, int target)
         {
-            throw new NotImplementedException();
+            int currMax = int.MinValue;
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] < target && array[i] > currMax)
+                {
+                    currMax = array[i];
+                }
+            }
+
+            return currMax == int.MinValue ? -1 : currMax;
         }
 
         public int[] AS03_FindRange(int[] array, int min, int max)
         {
-            throw new NotImplementedException();
+            var result = new List<int>();
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] >= min && array[i] <= max)
+                {
+                    result.Add(array[i]);
+                }
+            }
+
+            return result.ToArray();
         }
 
         #endregion
@@ -74,7 +113,25 @@ namespace Assignment
 
         public int[] EX01_FindTargetEnemies(int[] enemyHPs, int mana)
         {
-            throw new NotImplementedException();
+            var sorted = enemyHPs.OrderBy(hp => hp).ToArray();
+            var result = new List<int>();
+
+            for (int i = 0; i < sorted.Length; i++)
+            {
+                int num = sorted[i];
+                if (num <= mana)
+                {
+                    result.Add(num);
+                    mana -= num;
+                }
+
+                if (mana <= 0)
+                {
+                    break;
+                }
+            }
+
+            return result.ToArray();
         }
 
         #endregion
